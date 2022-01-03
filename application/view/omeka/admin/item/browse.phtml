@@ -5,7 +5,7 @@ $this->htmlElement('body')->appendAttribute('class', 'items browse');
 $sortHeadings = [
     [
         'label' => $translate('Title'),
-        'value' => 'title'
+        'value' => 'title',
     ],
     [
         'label' => $translate('Identifier'),
@@ -93,8 +93,8 @@ $userIsAllowedBatchDelete = $this->userIsAllowed('Omeka\Api\Adapter\ItemAdapter'
                 $this->url('admin/id', [
                     'controller' => 'user',
                     'action' => 'show',
-                    'id' => $owner->id()]
-                )
+                    'id' => $owner->id(),
+                ])
             );
         } else {
             $ownerText = $translate('[no owner]');
