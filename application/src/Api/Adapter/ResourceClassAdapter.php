@@ -109,7 +109,7 @@ class ResourceClassAdapter extends AbstractEntityAdapter
         }
         if (isset($query['local_name'])) {
             $qb->andWhere($expr->eq(
-                "omeka_root.localName",
+                'omeka_root.localName',
                 $this->createNamedParameter($qb, $query['local_name']))
             );
         }
@@ -125,7 +125,7 @@ class ResourceClassAdapter extends AbstractEntityAdapter
                 $this->createNamedParameter($qb, $prefix))
             );
             $qb->andWhere($expr->eq(
-                "omeka_root.localName",
+                'omeka_root.localName',
                 $this->createNamedParameter($qb, $localName))
             );
         }
