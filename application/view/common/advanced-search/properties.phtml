@@ -34,7 +34,7 @@ $queryOption = function ($value, array $search, $key, $text) {
     }
     return sprintf('<option value="%s"%s>%s</option>', $value, $selected, $text);
 };
-$queryText = function(array $search, $index) use ($escape, $translate) {
+$queryText = function (array $search, $index) use ($escape, $translate) {
     $text = $search['text'] ?? null;
     return sprintf('<input type="text" class="query-text" name="%s" value="%s" aria-label="%s">',
         $escape("property[$index][text]"),

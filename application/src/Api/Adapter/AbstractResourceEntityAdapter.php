@@ -332,11 +332,11 @@ abstract class AbstractResourceEntityAdapter extends AbstractEntityAdapter imple
                         ->createQueryBuilder()
                         ->select("$subqueryAlias.id")
                         ->from('Omeka\Entity\Resource', $subqueryAlias)
-                        ->where($qb->expr()->like("$subqueryAlias.title", $param));
-                    $predicateExpr = $qb->expr()->orX(
-                        $qb->expr()->in("$valuesAlias.valueResource", $subquery->getDQL()),
-                        $qb->expr()->like("$valuesAlias.value", $param),
-                        $qb->expr()->like("$valuesAlias.uri", $param)
+                        ->where($expr->like("$subqueryAlias.title", $param));
+                    $predicateExpr = $expr->orX(
+                        $expr->in("$valuesAlias.valueResource", $subquery->getDQL()),
+                        $expr->like("$valuesAlias.value", $param),
+                        $expr->like("$valuesAlias.uri", $param)
                     );
                     break;
 

@@ -46,7 +46,6 @@ class ResourceClassAdapter extends AbstractEntityAdapter
     public function hydrate(Request $request, EntityInterface $entity,
         ErrorStore $errorStore
     ) {
-        // $data = $request->getContent();
         $this->hydrateOwner($request, $entity);
 
         if ($this->shouldHydrate($request, 'o:local_name')) {

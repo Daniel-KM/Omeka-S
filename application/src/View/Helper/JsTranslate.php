@@ -32,6 +32,9 @@ class JsTranslate extends AbstractHelper
         $this->getView()->headScript()->appendScript(sprintf('
 window.addEventListener("DOMContentLoaded", function() {
     (function($) {
+        if (typeof Omeka === "undefined") {
+            var Omeka = {};
+        }
         Omeka.jsTranslate = function(str) {
             var jsTranslations = %s;
             return (str in jsTranslations) ? jsTranslations[str] : str;
