@@ -203,6 +203,10 @@ abstract class AbstractResourceEntityAdapter extends AbstractEntityAdapter imple
      *     - nex: has no value
      *     - list: is in list
      *     - nlist: is not in list
+     *     - sw: starts with
+     *     - nsw: does not start with
+     *     - ew: ends with
+     *     - new: does not end with
      *     - res: has resource
      *     - nres: has no resource
      *
@@ -243,6 +247,7 @@ abstract class AbstractResourceEntityAdapter extends AbstractEntityAdapter imple
             switch ($queryType) {
                 case 'neq':
                     $positive = false;
+                    // No break.
                 case 'eq':
                     $param = $this->createNamedParameter($qb, $value);
                     $subqueryAlias = $this->createAlias();
@@ -257,8 +262,10 @@ abstract class AbstractResourceEntityAdapter extends AbstractEntityAdapter imple
                         $expr->eq("$valuesAlias.uri", $param)
                     );
                     break;
+
                 case 'nin':
                     $positive = false;
+                    // No break.
                 case 'in':
                     $param = $this->createNamedParameter($qb, "%$value%");
                     $subqueryAlias = $this->createAlias();
@@ -289,27 +296,67 @@ abstract class AbstractResourceEntityAdapter extends AbstractEntityAdapter imple
                         ->createQueryBuilder()
                         ->select("$subqueryAlias.id")
                         ->from('Omeka\Entity\Resource', $subqueryAlias)
-                        ->where($qb->expr()->eq("$subqueryAlias.title", $param));
+                        ->where($expr->eq("$subqueryAlias.title", $param));
+                    $predicateExpr = $expr->orX(
+                        $expr->in("$valuesAlias.valueResource", $subquery->getDQL()),
+                        $expr->in("$valuesAlias.value", $param),
+                        $expr->in("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'nsw':
+                    $positive = false;
+                    // No break.
+                case 'sw':
+                    $param = $this->createNamedParameter($qb, "$value%");
+                    $subqueryAlias = $this->createAlias();
+                    $subquery = $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select("$subqueryAlias.id")
+                        ->from('Omeka\Entity\Resource', $subqueryAlias)
+                        ->where($expr->like("$subqueryAlias.title", $param));
+                    $predicateExpr = $expr->orX(
+                        $expr->in("$valuesAlias.valueResource", $subquery->getDQL()),
+                        $expr->like("$valuesAlias.value", $param),
+                        $expr->like("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'new':
+                    $positive = false;
+                    // No break.
+                case 'ew':
+                    $param = $this->createNamedParameter($qb, "%$value");
+                    $subqueryAlias = $this->createAlias();
+                    $subquery = $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select("$subqueryAlias.id")
+                        ->from('Omeka\Entity\Resource', $subqueryAlias)
+                        ->where($qb->expr()->like("$subqueryAlias.title", $param));
                     $predicateExpr = $qb->expr()->orX(
                         $qb->expr()->in("$valuesAlias.valueResource", $subquery->getDQL()),
-                        $qb->expr()->in("$valuesAlias.value", $param),
-                        $qb->expr()->in("$valuesAlias.uri", $param)
+                        $qb->expr()->like("$valuesAlias.value", $param),
+                        $qb->expr()->like("$valuesAlias.uri", $param)
                     );
                     break;
 
                 case 'nres':
                     $positive = false;
+                    // No break.
                 case 'res':
                     $predicateExpr = $expr->eq(
                         "$valuesAlias.valueResource",
                         $this->createNamedParameter($qb, $value)
                     );
                     break;
+
                 case 'nex':
                     $positive = false;
+                    // No break.
                 case 'ex':
                     $predicateExpr = $expr->isNotNull("$valuesAlias.id");
                     break;
+
                 default:
                     continue 2;
             }
