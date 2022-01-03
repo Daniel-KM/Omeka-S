@@ -44,7 +44,7 @@ $sortHeadings = [
 </div>
 
 <?php $this->trigger('view.browse.before'); ?>
-<?php if($itemSets): ?>
+<?php if ($itemSets): ?>
 <?php
 $userIsAllowedBatchUpdate = $this->userIsAllowed('Omeka\Api\Adapter\ItemSetAdapter', 'batch_update');
 $userIsAllowedBatchDelete = $this->userIsAllowed('Omeka\Api\Adapter\ItemSetAdapter', 'batch_delete');

@@ -71,7 +71,7 @@ CREATE TABLE `job` (
   `pid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `class` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `args` longtext COLLATE utf8mb4_unicode_ci COMMENT '(DC2Type:json_array)',
+  `args` longtext COLLATE utf8mb4_unicode_ci COMMENT '(DC2Type:json)',
   `log` longtext COLLATE utf8mb4_unicode_ci,
   `step` int(11) DEFAULT NULL,
   `total_steps` int(11) DEFAULT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE `media` (
   `item_id` int NOT NULL,
   `ingester` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `renderer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` longtext COLLATE utf8mb4_unicode_ci COMMENT '(DC2Type:json_array)',
+  `data` longtext COLLATE utf8mb4_unicode_ci COMMENT '(DC2Type:json)',
   `source` longtext COLLATE utf8mb4_unicode_ci,
   `media_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `storage_id` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -198,7 +198,7 @@ CREATE TABLE `resource_template_property` (
   `alternate_label` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alternate_comment` longtext COLLATE utf8mb4_unicode_ci,
   `position` int DEFAULT NULL,
-  `data_type` longtext COLLATE utf8mb4_unicode_ci COMMENT '(DC2Type:json_array)',
+  `data_type` longtext COLLATE utf8mb4_unicode_ci COMMENT '(DC2Type:json)',
   `is_required` tinyint(1) NOT NULL,
   `is_private` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
@@ -216,7 +216,7 @@ CREATE TABLE `session` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 CREATE TABLE `setting` (
   `id` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json_array)',
+  `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 CREATE TABLE `site` (
@@ -228,8 +228,8 @@ CREATE TABLE `site` (
   `theme` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
   `summary` longtext COLLATE utf8mb4_unicode_ci,
-  `navigation` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json_array)',
-  `item_pool` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json_array)',
+  `navigation` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
+  `item_pool` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
   `created` datetime NOT NULL,
   `modified` datetime DEFAULT NULL,
   `is_public` tinyint(1) NOT NULL,
@@ -289,7 +289,7 @@ CREATE TABLE `site_page_block` (
   `id` int NOT NULL AUTO_INCREMENT,
   `page_id` int NOT NULL,
   `layout` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json_array)',
+  `data` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
   `position` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_C593E731C4663E4` (`page_id`),
@@ -311,7 +311,7 @@ CREATE TABLE `site_permission` (
 CREATE TABLE `site_setting` (
   `id` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
   `site_id` int NOT NULL,
-  `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json_array)',
+  `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
   PRIMARY KEY (`id`,`site_id`),
   KEY `IDX_64D05A53F6BD1646` (`site_id`),
   CONSTRAINT `FK_64D05A53F6BD1646` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`) ON DELETE CASCADE
@@ -331,7 +331,7 @@ CREATE TABLE `user` (
 CREATE TABLE `user_setting` (
   `id` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int NOT NULL,
-  `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json_array)',
+  `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
   PRIMARY KEY (`id`,`user_id`),
   KEY `IDX_C779A692A76ED395` (`user_id`),
   CONSTRAINT `FK_C779A692A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
